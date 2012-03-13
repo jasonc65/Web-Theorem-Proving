@@ -1,0 +1,33 @@
+def subset(x,y) := all u (u:x => u:y)
+def eq(x,y) := subset(x,y) && subset(y,x)
+AxExt: eq(x,y) && x:w => y:w
+def _upair(x,y,z) := x:z && y:z && all u (u:z => eq(u,x) || eq(u,y))
+def _empty(x) := ! ex y y:x
+AxPair: ex u x:u && y:u
+AxUnion: ex u all y all z (z:y && y:x => z:u)
+AxPower: ex u all y (sub(y,x) => y:u)
+AxRepl: (all x all y all z (A(x,y) && A(x,z) => eq(y,z))) => ex u (all x all y (A(x,y) => y:u) && all y (y:u => ex x A(x,y))
+def _succ(x,y) := x:y && subset(x,y) && all z (z:y => eq(z,x) || z:x))
+def inductive(x) := ex y (_empty(y)) && all y ex z (_succ(y,z) && y:x)
+AxInf: ex x inductive(x)
+def disjoint(x,y) := ! ex z (z:x && z:y)
+AxReg: !_empty(x) => ex y (y:x && ! ex z disjoint(x,y))
+def mu_disjoint(x) := all y all z (y:x && z:x => disjoint(y,z))
+AxChoice: mu_disjoint(x) => ex y1 all z1 (z1:x => ex z2 (z2:z1 && z2:y1 && all y2 (y2:z1 && y2:y1 => eq(z2,y2))))
+
+
+How do we prove 2 + 2 = 4?
+
+Before we can prove it, we must express it in our formal language.  The problem is, + is not yet defined.  Another problem is that we did not provide for operations in our language.  Recall the definition of empty set as _empty()?  It does not define what expression to replace empty with: instead, it defines which formula to replace _empty(x) with.  Mathematicians are used to working with terms in place of variables.  We did not support terms in our language, because we wanted to start out with something simple and avoid feature creep.  So we cannot define x + y.  Instead, we define when x + y = z.
+
++ can be defined by recursion: x + 0 = x, x + succ(y) = succ(x + y).
+
+lambda x (x + 1)
+
+pair(zero,two):ston(pair(zero,two))
+pair(succ(x),succ(two)):ston(pair(zero,two)) => pair(x,two):ston(pair(zero,two))
+
+_empty(x) && _pair(x,y,pair) && _ston(pair,ston) && _succ(u,u2) && _succ(v,v2) & _pair(u,v,uv) && _pair(u2,v2,uv2) && uv2:ston => uv:ston
+
+
+

@@ -1,0 +1,228 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="math.css" />
+<link rel="stylesheet" type="text/css" href="form.css" />
+<script type="text/javascript" src="math.js"></script>
+<script type="text/javascript">
+<!--
+//this function adds text to the growing list.  Eventually, this function
+//will check the validity of the text as an inference.
+function validate_text() {
+  var value = accept(text.value)
+  if(value.type === "command")
+    formulas.add(value.value)
+  else if(value.type === "error" || value.type === "help") {
+    beep.play()
+    setTimeout(function(){beep.load()},150)
+    formulas.add("SYNTAX ERROR")
+  }
+
+  //adjust list height
+  list.style.maxHeight = text.parentNode.offsetTop - list.offsetTop - 4 + "px"
+  //maintain scroll position of element at the bottom
+  list.scrollTop = list.scrollHeight
+    
+  //clear text
+  text.value = ""
+    
+  //return focus
+  text.focus()
+}
+
+//this function executes at load time
+//cross-OS issue: in Linux, prompt pops up before page is displayed
+//  Chrome or FireFox on Windows displays page correctly
+//  in Linux, hitting reload causes page to be refreshed correctly
+//    even though it was loaded with the said bug taking effect
+//  in Linux, clicking quickly and decisively on link to page 
+//    also seems to cause the page to load in correct order
+//    without bug taking effect
+//  this issue may be distro-dependent; it shows up in Ubuntu Lucid
+function load() {
+  var value
+  
+  //initialize these variables
+  list = document.getElementById("formulas")
+  text = document.getElementsByName("new_formula")[0]
+  beep = document.createElement("audio")
+  beep.src = "beep-2.wav"
+  //beep.setAttribute("controls","controls")
+  beep.volume = 0.2
+  //document.body.insertBefore(beep,document.body.firstChild)
+    //source of sound file:
+    //  http://www.soundjay.com/button/beep-2.wav
+    //repository of sound file:
+    //  http://www.soundjay.com/beep-sounds-1.html
+  formulas = new Formulas()
+  LI = document.createElement("li").nodeName
+  
+  if(formulas.formulas.length == 0) {
+    //prompt for the first formula
+    while(
+      value = accept(prompt("Enter a formula\n" +
+        "\"?\" for an example")),
+      value.type === "noCommand" || //require nonempty data
+        value.type === "error"
+    );
+    if(value.type === "help") {
+      var ex = example()
+      for(var i = 0; i < ex.length; i++) formulas.add(ex[i])
+    } else //value.type === "command"
+      formulas.add(value.value)
+  }
+
+  //adjust layout of list
+  list.style.maxHeight = text.parentNode.offsetTop - list.offsetTop - 4 + "px"
+  list.scrollTop = list.scrollHeight
+  
+  //clear text
+  text.value = ""
+  
+  //set focus to textarea
+  text.focus()
+}
+
+//formula cookie wrappers
+function Formulas() {
+
+  //load formulas from cookies
+  this.load = function() {
+    if(!document.cookie) { this.formulas = []; return }
+    //load cookies
+    var cookies = document.cookie
+    this.formulas = map(
+      function(s) { return unescape(s.split("=")[1]) },
+      filter(
+        function(s) { return s.match("formula") },
+        cookies.split(";")))
+    //refresh cookies
+    var expires = new Date()
+    expires.setDate(expires.getDate() + 30)
+    cookies = document.cookie.split(";")
+    for(var i in cookies) {
+      document.cookie = cookies[i]+";"+
+        "expires="+expires.toLocaleString()
+    }
+    //update list
+    list.innerHTML = map(li,this.formulas).join("")
+  }
+
+  //add formulas and update cookies and list
+  this.add = function(formula) {
+    //update cookies
+    var expires = new Date()
+    expires.setDate(expires.getDate() + 30)
+    document.cookie = "length="+(this.formulas.length+1)+";"+
+      "expires="+expires.toLocaleString()
+    document.cookie = "formula"+this.formulas.length+"="+escape(formula)+";"+
+      "expires="+expires.toLocaleString()
+    //add formula
+    this.formulas.push(formula)
+    //update list
+    if(this.formulas.length == 1) list.innerHTML = ""
+    list.innerHTML += li(formula)
+  }
+
+  //clear formulas, cookies, and list
+  this.clear = function() {
+    //clear cookies
+    var expires = new Date()
+    expires.setDate(expires.getDate() - 30)
+    var cookies = document.cookie.split(";")
+    for(var i in cookies) {
+      document.cookie = cookies[i]+";"+
+        "expires="+expires.toLocaleString()
+    }
+    //clear formulas
+    this.formulas = []
+    //clear list
+    list.innerHTML = liCenter("Cookies cleared")
+  }
+  
+  //back up: delete the last formula
+  this.back = function() {
+    if(this.formulas === 0) return
+    //delete cookie
+    var expires = new Date()
+    expires.setDate(expires.getDate() - 30)
+    document.cookie = "formula"+(this.formulas.length-1)+"=0;"+
+      "expires="+expires.toLocaleString()
+    if(this.formulas === 1)
+      expires.setDate(expires.getDate() + 60)
+    document.cookie = "length="+(this.formulas.length-1)+";"+
+      "expires="+expires.toLocaleString()
+    //delete formula
+    this.formulas.pop()
+    //delete list item
+    if(this.formulas.length === 0)
+      list.innerHTML = liCenter("Cookies cleared")
+    else do {
+      var tag = list.lastChild.nodeName
+      list.removeChild(list.lastChild)
+    } while(tag !== LI)
+  }
+
+  //load cookies when object is initialized
+  this.load()
+}
+
+//wrapper for li element
+function li(text) {
+  return '<li>' + text + '</li>'
+}
+
+//centered li element
+function liCenter(text) {
+  return '<li style="text-align:center">' + text + '</li>'
+}
+
+//validate: return JSON
+function accept(text) {
+  var text2 = trim(text)
+  if(!text2) return {type:"noCommand"}
+  if(text2 === "?") return {type:"help"}
+  var p = parseImpFormula(tokenize(text2))
+  if(p === null) return {type:"error"}
+  if(p.y !== null) return {type:"error"}
+  return {type:"command",value:p.x}
+}
+  
+
+//get rid of whitespace
+function trim(text) {
+  return text ? text.replace(/^\s+|\s+$/g,"") : text
+}
+
+// -->
+</script>
+<title>Build Your Proof</title>
+</head>
+
+<body onload="load()">
+<h1>Build Your Proof</h1>
+
+<form onsubmit="return false" action="">
+  <ul id="formulas">
+    <li style="height: 1em" id="firstFormula"></li>
+    <li style="text-align: center; height: 1em">
+      Formulas will appear here
+    </li>
+    <li style="height: 1em"></li>
+  </ul>
+  <p>
+    <textarea name="new_formula" rows="4" cols="80"></textarea>
+    <br />
+    <input type="submit" value="Enter" onclick="validate_text()" />
+    <input type="submit" value="Back"
+      onclick="formulas.back();text.focus()" />
+    <input type="submit" value="Clear"
+      onclick="formulas.clear();text.focus()" />
+  </p>
+</form>
+</body>
+</html>
+

@@ -1,0 +1,27 @@
+body
+{
+padding: 0;
+margin: 11px;
+position: fixed;
+top: 0px;
+left: 0px;
+right: 0px;
+bottom: 0px;
+}
+
+h1
+{
+margin-bottom: 4px;
+}
+
+ul
+{
+margin-top: 0;
+max-height: 60%;
+}
+
+form p
+{
+position: absolute;
+bottom: 4px;
+}

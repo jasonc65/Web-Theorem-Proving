@@ -1,0 +1,215 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Crupper_Jason_IS577_Section</title>
+<!--
+  IS577 Keller Online
+  Session Date
+  May 9, 2011
+
+  This site currently consists of this index page and several other pages that can be reached via links on this page: Mathematics Tools, and MathML Screenshots.
+
+Milestone 1 features:
+  1) Global Structure tags: XML, Doctype, html, head, title, body
+  2) Text tags, such as p, h1
+  3) Images: displayed on the MathML Screenshots page
+  4) This page is named index.html, although I originally wanted it to be called math.html
+  5) I also had to change the title from Web Theorem Proving to Crupper_Jason_IS577_Section, and I cannot remember the section number.
+  6) List tags
+  7) Table tags: on Mathematical Tools
+
+Milestone 2:
+  8) validated index.html (this page)
+  9) two tables had already been included during Week 1
+  10) some hyperlinks were added for completeness
+  11) two images had already been included; it may be
+      necessary to move the images to a site that will serve them
+  12) included form in proof.html
+  13) added link colors to stylesheet
+  14) added exception in the style sheet for lists in the index section
+
+  15) added some new pages (math.html, proof.html), sketching a sample proof
+      and providing a form for the user to submit proofs.  Eventually, the site
+      will be upgraded so that the user can choose the enter the proof as
+      client-side (JavaScript) or server-side (ASP.NET with AJAX).
+  16) added index section to aid navigation
+  17) validated style sheet
+  18) validated math.html, proof.html
+  19) added link to math.html, proof.html
+  20) applied style sheet to math.html, proof.html
+  TODO:
+      link other pages to stylesheet
+      
+      
+      validate other pages
+      add alt text to images
+      change style of button (if possible)
+
+  This page will be continuously updated.
+
+-->
+<link rel="stylesheet" type="text/css" href="math.css" />
+</head>
+<body>
+<h1>Web Theorem Proving</h1>
+
+<h2>Index</h2>
+
+<p>Sections of this page</p>
+
+<ul class="intro">
+  <li><a href="#sec0">Introduction</a></li>
+  <li><a href="#sec1">The Assembly Language of Mathematics</a></li>
+  <li><a href="#sec2">Proofs</a></li>
+</ul>
+
+<p>Other pages of this website</p>	
+
+<ul class="intro">
+  <li><a href="mathsites.html">Mathematics Tools</a></li>
+  <li><a href="mathmlshots.html">MathML Screenshots</a></li>
+  <li><a href="math.html">Sample Proof</a></li>
+  <li><a href="proof.html">Build Your Proof</a></li>
+</ul>
+
+<p>Other websites</p>
+
+<ul class="intro">
+  <li><a href="http://mathworld.wolfram.com/Zermelo-FraenkelAxioms.html" onclick="window.open(this.href,'_blank');return false">MathWorld</a></li>
+  <li><a href="http://scienceblogs.com/goodmath/2007/06/defining_math_using_zfc_set_th.php" onclick="window.open(this.href,'_blank');return false">ZFC and Assembly Language: Blog</a></li>
+  <li><a href="http://www.faqs.org/docs/artu/ch01s06.html#rule_of_optimization" onclick="window.open(this.href,'_blank');return false">Prototype First</a></li>
+</ul>
+
+
+<h2 id="sec0">Introduction</h2>
+
+<p> I have always considered mathematics fun, and I don't mean adding problems, which get boring after awhile. </p>
+
+<p> The funnest part of mathematics is theorem proving, because here you get to convince yourself thoroughly of the facts. </p>
+
+<h3>Make or Buy?</h3>
+<p> Mathematicians and computer scientists have put decades of reseach in to automation of mathematical proofs, <a href="mathsites.html">as evidenced by some Websites</a>.
+And I have been very interested in this area of research.  There are at least half a dozen tools available for free as open source projects, yet so far none of them seem to quite satisfy my needs.
+I have always liked learning mathematics like I have programming, from the bottom up: learning how higher level abstractions, including ones we are accustomed to taking for granted, are implemented at a lower level we can rely on, and then using the higher level abstractions with greater confidence.
+
+While I have experience in assembly language programming from the past, I have never peeked inside a kernel.
+And while I have thoroughly studied set theory and understand the underpinnings of the system of real numbers in excruciating detail, I have never yet used a theorem prover with confidence.
+It seems that the make vs. buy decision is settled, and I am going to one of these days write my own theorem prover. </p>
+
+<h3>Why White on Black?</h3>
+
+<p> In short, I consider a black background easier on the eyes (and arguably easier on the environment, too). I don't know why the world switched to white as soon as the GUI was popularized, but it was not a smart move in my opinion. </p>
+
+<h2 id="sec1"> The Assembly Language of Mathematics </h2>
+
+<p> I consider symbolic logic the assembly language of mathematics, something which mathematicians often do not like to think about directly, but which nevertheless underlies their informal thinking.  Mathematicians like to think in terms of higher order concepts, which are similar to the Web developer's use of high level tools such as ASP.NET or Ruby on Rails or the programmer's employment of C#, F#, Python, Perl, or Haskell. </p>
+
+<p> Consider a proof of "2 + 2 = 4".  Orwell once said that all freedom follows from this proposition.</p>
+<ul>
+  <li> 2 + 2 = </li>
+  <li> 2 + (1 + 1) = </li>
+  <li> (2 + 1) + 1 = </li>
+  <li> 3 + 1 = </li>
+  <li> 4 </li>
+</ul>
+<p>This proof assumes you accept certain definitions such as 3 = 2 + 1, 4 = 3 + 1, and properties such as (x + y) + z = x + (y + z).  If you think more deeply, you will also realize you're supposed to permit the substitution of equals for equals anywhere you please.  Whether you realize it or not, if you can follow this proof, you are already programming at a high level in mathematics.
+
+Later, when I show you the proof of the same theorem in low level set theory, you will be totally confounded, which is why I said that symbolic logic is the assembly language of mathematics. </p>
+
+<h3>Zermelo Fraenkel Set Theory</h3>
+
+<p> If symbolic logic is assembly language, then set theory must be something like C: it is only slightly removed from the foundations (hardware) of the system.
+
+And like C, set theory has a high tolerance for kludges, such as C's allowance for evil arrays, or set theory's penchant for arbitrary definitions such as the definition of order pair as &lt;x,y&gt; = {{x},{x,y}}.
+Also like C, set theory has some security holes of its own: otherwise known as the paradoxes, many of which are actual, not apparent, contradictions of logic.  Fortunately, some versions of set theory are widely believed to be free of contradictions
+One of these theories, and the one we will be using, is Zermelo-Fraenkel set theory with axiom of Choice (ZFC).
+A good Web tutorial on this system can be found at <a href="http://mathworld.wolfram.com/Zermelo-FraenkelAxioms.html" onclick="window.open(this.href,'_blank');return false">MathWorld</a>.</p>
+
+<p>There is a <a href="http://scienceblogs.com/goodmath/2007/06/defining_math_using_zfc_set_th.php" onclick="window.open(this.href,'_blank');return false">blog</a> where the assembly language-like aspects of set theory are discussed.</p>
+
+<h3> Mathematical notation in ASCII </h3>
+<p>Mathematicians like to use unconventional characters for many of their symbols.  Programmers, on the other hand, are accustomed to programming in pure 7-bit ASCII.
+I feel that anyone using an autamated mathematics tool should be used to the way both mathematicians and programmers write and should have no problem dealing with the limitations of ASCII.
+For instance, mathematicians often use one character for each symbol, while programmers make up for the limitations of ASCII by using multi-character identifiers, which are often self-documenting and easier for novices to read.  Tools for rendering mathematical symbols exist, the most popular being LaTex.
+MathML is a markup language for mathematics based on XML, and it currently renders inconstently across browser platforms, as I illustrate <a href="mathmlshots.html">here</a>. </p>
+
+<p> It is settled that my notation will resemble a programming language more than conventional mathematical notation. </p>
+
+<h3> The language </h3>
+
+<p> The language of choice shall be that of first order logic supporting set theory.</p>
+
+<h4> The opcodes </h4>
+<p>The opcodes of the assembly language of Web Theorem Proving shall consist of:</p>
+<ul>
+  <li>The logical connectives: &amp;&amp; || ! =></li>
+  <li>The membership operator: :</li>
+  <li>The quantifies: all, ex</li>
+  <li>All other symbols shall be identifies which will be treated as variables or predicates: e.g., x, y, n, x1, alpha, add_real, is_pair, etc.</li>
+</ul> 
+<p>The language shall be free-flowing: unnecessary whitespace is ignored.</p>
+
+<h4> Parsing </h4>
+
+<p>Like Lisp, and unlike C, our mathematical language is designed to be easy to parse. The rules:</p>
+<ul>
+  <li>formula := all identifier formula | ex identifier formula |
+  formula || formula | formula &amp;&amp; formula | <br /> formula => formula |
+  ! formula | (formula) | identifier : identifier | identifier(identifier,...,identifier)</li>
+</ul>
+
+<h3>Prototype First</h3>
+
+<p>I'm going to borrow a principle from Unix culture: <a href="http://www.faqs.org/docs/artu/ch01s06.html#rule_of_optimization" onclick="window.open(this.href,'_blank');return false">prototype first</a>.  The first version of my theorem prover is to be posted on the Web and to run as JavaScript, so that the user may have a free tool with which to get immediate hands-on experience.  It will probably be inefficient in some aspects.  Efficiency is not the most important goal, at least not at first.  The user may experience some due to the limitations of the language.  As the tool is developed, it will become more clear what features and efficiency hacks are necessary.  I intend most of all to develop a tool that is easy to use, experiment with, and explore, as well as easy to extend and not succumbing to the feature creep that affects most enterprise software.</p>
+
+<h2 id="sec2">Proofs</h2>
+
+<p> Mathematics is usually axiomatized in such a way that the proofs are formally derived from the axioms.  We shall use the usual axioma schemas that are used in set theory and logic </p>
+
+<p> The axioms can be divided into the logical axioms and the mathematical axioms. </p>
+
+<p> The logical axioms</p>
+<ul>
+  <li> Imp1: A => (B => A) </li>
+  <li> Imp2: ((A => B) => (A => C)) => (A => (B => C)) </li>
+  <li> Neg: (!B => !A) => (A => B) </li>
+  <li> And1: !(A => !B) => A &amp;&amp; B </li>
+  <li> And2: A &amp;&amp; B => !(A => !B) </li>
+  <li> Or1: (!A => B) => A || B </li>
+  <li> Or2: A || B => (!A => B) </li>
+  <li> All: all x A => A[x/y], where A[x/y] is obtained by substitution x for why in A, provided that the substitution does not cause confusion of variables </li>
+  <li> Ex1: !(! all x A) => ex x A </li>
+  <li> Ex2: ex x A => !(! all x A) </li>
+</ul>
+<p>The mathematical axioms shall use the aid of definitions.</p>
+<ul>
+  <li> def subset(x,y) := all u (u:x => u:y) </li>
+  <li> def eq(x,y) := subset(x,y) &amp;&amp; subset(y,x) </li>
+  <li> AxExt: eq(x,y) &amp;&amp; x:w => y:w </li>
+  <li> def _upair(x,y,z) := x:z &amp;&amp; y:z &amp;&amp; all u (u:z => eq(u,x) || eq(u,y)) </li>
+  <li> def _empty(x) := ! ex y y:x </li>
+  <li> AxPair: ex u x:u &amp;&amp; y:u </li>
+  <li> AxUnion: ex u all y all z (z:y &amp;&amp; y:x => z:u) </li>
+  <li> AxPower: ex u all y (sub(y,x) => y:u) </li>
+  <li> AxRepl: (all x all y all z (A(x,y) &amp;&amp; A(x,z) => eq(y,z))) => ex u (all x all y (A(x,y) => y:u) &amp;&amp; all y (y:u => ex x A(x,y)) </li>
+  <li> def _succ(x,y) := x:y &amp;&amp; subset(x,y) &amp;&amp; all z (z:y => eq(z,x) || z:x))</li>
+  <li> def inductive(x) := ex y (_empty(y)) &amp;&amp; all y ex z (_succ(y,z) &amp;&amp; y:x)</li>
+  <li> AxInf: ex x inductive(x) </li>
+  <li> def disjoint(x,y) := ! ex z (z:x &amp;&amp; z:y) </li>
+  <li> AxReg: !_empty(x) => ex y (y:x &amp;&amp; ! ex z disjoint(x,y)) </li>
+  <li> def mu_disjoint(x) := all y all z (y:x &amp;&amp; z:x => disjoint(y,z)) </li>
+  <li> AxChoice: mu_disjoint(x) => ex y1 all z1 (z1:x => ex z2 (z2:z1 &amp;&amp; z2:y1 &amp;&amp; all y2 (y2:z1 &amp;&amp; y2:y1 => eq(z2,y2)))) </li>
+</ul>
+<p>Theorems cannot be derived without rules of inference.  The rules we use are:</p>
+<ul>
+  <li> MP: A, A => B |- B </li>
+  <li> G: A |- all x A </li>
+</ul>
+
+<p>It is now appropriate to discuss proofs.  A proof of 2 + 2 = 4 is sketched <a href="math.html">here</a>.  You can build your own proofs <a href="proof.html">here</a>.</p>
+
+</body>
+</html>

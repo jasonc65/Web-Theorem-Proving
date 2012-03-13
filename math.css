@@ -1,0 +1,156 @@
+/*
+  This style sheet applies a theme to the math website, featuring:
+    dark backgrounds
+    slightly off-black background for emphasis
+    monospace code snippets  
+*/
+
+/*
+  Apply theme to common page elements
+*/
+
+/* page border */
+html
+{
+background-color: #00001f;
+}
+
+body
+{
+margin: 1.5ex;
+border: 1px solid #3f3f3f;
+padding: 4px;
+}
+
+/* body elements */
+h1, h2, h3, h4, p
+{
+padding-left: 1ex;
+padding-right: 1ex;
+}
+
+/* colors */
+body, textarea
+{
+color:white;
+background-color:black;
+}
+
+/* fine-tune headings */
+h1 {margin: 0;}
+h1 {font-size: 32px;}
+h2 {font-size: 28px;}
+h1, h2 {text-align: center;}
+h3 {font-size: 24px;}
+h4 {font-size: 18px;}
+
+h1 span
+{
+color: #ffffe0;
+background-color: #00001f;
+border-top: 0;
+border-left: 1px solid #3f3f3f;
+border-right: 1px solid #3f3f3f;
+border-bottom: 1px solid #3f3f3f;
+padding: 4px;
+}
+
+/*
+  give list dark blue background code theme
+*/
+ul
+{
+font-family: Courier New, monospace;
+font-size: 14px;
+background-color: #00001f;
+color: #ffffe0;
+list-style: none;
+border-top: 1px solid #3f3f3f;
+padding-left: 0px;
+padding-right: 0px;
+margin-left: 4ex;
+margin-right: 4ex;
+overflow: auto;
+}
+
+/* list items */
+li
+{
+border-left: 1px solid #3f3f3f;
+border-right: 1px solid #3f3f3f;
+border-bottom: 1px solid #3f3f3f;
+padding: 1ex;
+}
+
+/* enlarged pipes for BNF notation */
+li span
+{
+font-size: 20px;
+}
+
+/*
+  This section pertains to form elements in file proof.html.
+  Some details are contained in file form.css.
+*/
+
+form
+{
+height: 100%;
+}
+
+form p
+{
+text-align: center;
+margin: 0;
+width: 100%;
+}
+
+form li
+{
+padding-top: 0;
+padding-bottom: 0.5ex;
+}
+
+/*
+  Index section gets grey background
+*/
+ul.intro
+{
+font-family:serif;
+background-color:#0f0f0f;
+color:white;
+margin-right: 50%;
+}
+
+ul.intro li
+{
+padding: 0px;
+width: auto;
+}
+
+/*
+  Format table in mathsites.html
+*/
+
+table
+{
+border: 1px solid #3f3f3f;
+color: #ffffe0;
+background-color: #00001f;
+border-collapse: collapse;
+margin-left: auto;
+margin-right: auto;
+}
+
+td
+{
+padding: 4px;
+}
+
+/*
+  link styles
+*/
+a:link {color:#5fafff;} /* new */
+a:visited {color:#0fff0f;} /* old */
+a:hover {color:yellow;} /* clicking */
+a:active {color:red;} /* clicked */

@@ -1,0 +1,144 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="math.css" />
+<title>Sample Proof</title>
+</head>
+
+<body>
+<h1>Sample Proof</h1>
+
+<p>Recall the axioms:</p>
+
+<ul>
+  <li> def subset(x,y) := all u (u:x => u:y) </li>
+  <li> def eq(x,y) := subset(x,y) &amp;&amp; subset(y,x) </li>
+  <li> AxExt: eq(x,y) &amp;&amp; x:w => y:w </li>
+  <li> def _upair(x,y,z) := x:z &amp;&amp; y:z &amp;&amp; all u (u:z => eq(u,x) || eq(u,y)) </li>
+  <li> def _empty(x) := ! ex y y:x </li>
+  <li> AxPair: ex u x:u &amp;&amp; y:u </li>
+  <li> AxUnion: ex u all y all z (z:y &amp;&amp; y:x => z:u) </li>
+  <li> AxPower: ex u all y (sub(y,x) => y:u) </li>
+  <li> AxRepl: (all x all y all z (A(x,y) &amp;&amp; A(x,z) => eq(y,z))) => ex u (all x all y (A(x,y) => y:u) &amp;&amp; all y (y:u => ex x A(x,y)) </li>
+  <li> def _succ(x,y) := x:y &amp;&amp; subset(x,y) &amp;&amp; all z (z:y => eq(z,x) || z:x))</li>
+  <li> def inductive(x) := ex y (_empty(y)) &amp;&amp; all y ex z (_succ(y,z) &amp;&amp; y:x)</li>
+  <li> AxInf: ex x inductive(x) </li>
+  <li> def disjoint(x,y) := ! ex z (z:x &amp;&amp; z:y) </li>
+  <li> AxReg: !_empty(x) => ex y (y:x &amp;&amp; ! ex z disjoint(x,y)) </li>
+  <li> def mu_disjoint(x) := all y all z (y:x &amp;&amp; z:x => disjoint(y,z)) </li>
+  <li> AxChoice: mu_disjoint(x) => ex y1 all z1 (z1:x => ex z2 (z2:z1 &amp;&amp; z2:y1 &amp;&amp; all y2 (y2:z1 &amp;&amp; y2:y1 => eq(z2,y2)))) </li>
+</ul>
+
+<p>How do we prove 2 + 2 = 4?</p>
+
+<p>Before we can prove it, we must express it in our formal language.  The problem is, + is not yet defined.  Another problem is that we did not provide for operations in our language.  Recall the definition of empty set as _empty()?  It does not define what expression to replace empty with: instead, it defines which formula to replace _empty(x) with.  Mathematicians are used to working with terms in place of variables.  We did not support terms in our language, because we wanted to start out with something simple and avoid feature creep.  So we cannot define x + y.  Instead, we define when x + y = z.</p>
+
+<p>+ can be defined by recursion: x + 0 = x, x + succ(y) = succ(x + y).  But recursion itself has to be defined.  So we define x + y = z where there is a sequence z[0]...z[y] such that z[0] = x, z[succ(i)] = succ(z[i]) whenever z[succ(i)] is defined, and succ[y] = z.  More formally:</p>
+
+<ul>
+  <li>def _add(x,y,z) := ex seq (func(seq) &amp;&amp; pair(x,zero):seq &amp;&amp; pair(y,z):seq
+    &amp;&amp; all i (pair(x,succ(i)):seq =&gt; pair(x,i):seq))
+  </li>
+  
+</ul>
+
+<p>This is still not conmpletely formal because it uses terms that have not yet been defined.  At this point, we are using a top-down approach to proof.  For instance, to define, pair(x,y):</p>
+
+<ul>
+  <li>def _pair(x,y,z) := ex u ex v (_upair(x,x,u) &amp;&amp; _upair(x,y,v) &amp;&amp; _upair(u,v,z))</li>
+  
+</ul>
+
+
+<p>Now pair(x,i):seq has to be replaced with:</p>
+
+<ul>
+  <li>ex u (_pair(x,i,u) &amp;&amp; u:seq)</li>
+</ul>
+
+
+<p>More definitions:</p>
+
+<ul>
+  <li>def func(f) := all x all y all z (pair(x,y):f &amp;&amp; pair(x,z):f =&gt; eq(y,z))</li>
+  <li>def nat(x) := all u (inductive(u) =&gt; x:u) </li>
+  <li>def _zero(x) := _empty(x)</li>
+  <li>def _one(x) := _succ(zero,x)</li>
+  <li>def _two(x) := _succ(one,x)</li>
+  <li>def _three(x) := _succ(two,x)</li>
+  <li>def _four(x) := _succ(three,x)</li>
+</ul>
+
+
+<p>2 + 2 = 4 is to be expressed as:</p>
+
+<ul>
+  <li>_add(two,two,four)</li>
+  
+</ul>
+
+
+<p>Or more formally:</p>
+
+<ul>
+  <li>ex u2 ex u4 (_two(u2) &amp;&amp; _four(u4) &amp;&amp; _add(u2,u2,u4)</li>
+  
+</ul>
+
+<p>A proof can now be sketched:</p>
+
+<ul>
+  <li>p1 = _add(two,zero,two)</li>
+  <li>p2 = _add(two,zero,two) =&gt; _add(two,one,three)</li>
+  <li>p3 = mp(p1,p2)</li>
+  <li>check p3 == _add(two,one,three)</li>
+  <li>p4 = _add(two,one,three) =&gt; _add(two,two,four)</li>
+  <li>p5 = mp(p3,p4)</li>
+  <li>check p5 == _add(two,two,four)</li>
+</ul>
+
+<p>This takes a programmatic view of proofs.  p1 is assigned a proposition so far unproven.  p2 is assigned another such proposition.  p3 is assigned the result of applying rule MP to p1 and p2.  It is checked that p3 is the proposition that two plus one makes three.  By a similar process, we reach the proposition two plus two makes four, which is our goal.  Formulas p1, p2, and p4 are still unproven, so these are subgoals.</p>
+
+<p>This is an example of divide and conquer, with which software developers are familiar.  Many existing tools are known to support this approach.</p>
+
+<ul>
+  <li></li>
+  
+</ul>
+
+<p>paragraph</p>
+
+<ul>
+  <li></li>
+  
+</ul>
+
+<p>paragraph</p>
+
+<ul>
+  <li></li>
+  
+</ul>
+
+<p>paragraph</p>
+
+<ul>
+  <li></li>
+  
+</ul>
+
+<p>paragraph</p>
+
+<ul>
+  <li></li>
+  
+</ul>
+
+<p>paragraph</p>
+
+
+</body>
+</html>

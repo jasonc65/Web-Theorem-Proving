@@ -1,0 +1,30 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link rel="stylesheet" type="text/css" href="math.css" />
+<title>Build Your Proof</title>
+</head>
+
+<body>
+<h1>Build Your Proof</h1>
+
+<form action="proof.aspx" method="post">
+  <p>Formulas</p>
+  <ul id="formulas">
+    <li>Formula1</li>
+    <li>Formula2</li>
+    <li>Formula3</li>
+  </ul>
+  
+  <p><textarea name="new_formula" rows="4" cols="80">Formula4</textarea></p>
+  <p><input type="submit" value="Enter" /></p>
+</form>
+<script type="text/javascript">
+document.getElementsByName("new_formula")[0].focus()
+</script>
+</body>
+</html>
+

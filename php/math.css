@@ -1,0 +1,21 @@
+body, textarea
+{
+color:white;
+background-color:black;
+}
+
+ul
+{
+font-family: Courier New, monospace;
+}
+
+ul.intro
+{
+font-family:serif;
+}
+
+
+a:link {color:#5fafff;} /* new */
+a:visited {color:#0fff0f;} /* old */
+a:hover {color:yellow;} /* clicking */
+a:active {color:red;} /* clicked */
